@@ -3,16 +3,27 @@ package dataSTr;
 public class MyNode<T> {
     private MyNode<T> leftChild;
     private MyNode<T> rightChild;
+    private MyNode<T> parent;
     private T value;
 
-    MyNode(T myNode) {
+    public MyNode(T myNode, MyNode<T> parent) {
         setValue(myNode);
         this.leftChild = null;
         this.rightChild = null;
+        this.parent = parent;
     }
 
     public T getValue() {
         return this.value;
+    }
+    public MyNode<T> getLeftChild() {
+        return this.leftChild;
+    }
+    public MyNode<T> getRightChild() {
+        return this.rightChild;
+    }
+    public MyNode<T> getParent() {
+        return parent;
     }
 
     public void setValue(T value) {
@@ -22,42 +33,35 @@ public class MyNode<T> {
             this.value = null;
         }
     }
-
-    public MyNode<T> getLeftChild() {
-        return this.leftChild;
+    public void setParent(MyNode<T> parent) {
+        this.parent = parent;
     }
-
     public void setLeftChild(T value) {
         if (value != null) {
-            this.leftChild = new MyNode<T>(value);
+            this.leftChild = new MyNode<T>(value, this);
         } else {
             this.leftChild = null;
         }
     }
-
     public void setLeftChild(MyNode<T> node) {
         if (node != null) {
             this.leftChild = node;
+            leftChild.setParent(this);
         } else {
             this.leftChild = null;
         }
     }
-
-    public MyNode<T> getRightChild() {
-        return this.rightChild;
-    }
-
     public void setRightChild(T value) {
         if (value != null) {
-            this.rightChild = new MyNode<T>(value);
+            this.rightChild = new MyNode<T>(value, this);
         } else {
             this.rightChild = null;
         }
     }
-
     public void setRightChild(MyNode<T> node) {
         if (node != null) {
             this.rightChild = node;
+            rightChild.setParent(this);
         } else {
             this.rightChild = null;
         }
@@ -69,7 +73,6 @@ public class MyNode<T> {
         }
         throw new Exception("Given node does not exist");
     }
-
     public boolean hasChildren() throws Exception {
         if (this.value != null) {
             return ((this.getLeftChild() != null) || (this.getRightChild() != null));
@@ -81,4 +84,6 @@ public class MyNode<T> {
     public String toString() {
         return "" + this.getValue();
     }
+
+
 }

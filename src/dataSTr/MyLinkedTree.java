@@ -8,6 +8,9 @@ public class MyLinkedTree<T> {
 	public MyLinkedTree() {
 		this.root = null;
 	}
+	public MyLinkedTree(T data) {
+		this.root = new MyNode<>(data, null);
+	}
 
 	public void clear() {
 		this.root = null;
@@ -60,7 +63,8 @@ public class MyLinkedTree<T> {
 		return null;
 	}
 
-	public void insertItem(T data) throws Exception {
+	//I don't need these functions, so I don't remake them
+	/*public void insertItem(T data) throws Exception {
 		if (data != null) {
 			if (!this.isFull()) {
 				if (retrieve(data) == null) {
@@ -79,7 +83,7 @@ public class MyLinkedTree<T> {
 	private void insertItem(MyNode<T> thisNode, T data) throws Exception {
 		if (data != null) {
 			if (thisNode == null) {
-				thisNode = new MyNode<T>(data);
+				thisNode = new MyNode<T>(data, null);
 				if (isEmpty()) {
 					this.root = thisNode;
 				}
@@ -102,8 +106,7 @@ public class MyLinkedTree<T> {
 				}
 			}
 		}
-	}
-
+	}*/
 	public void deleteItem(T data) throws Exception {
 		if (data != null) {
 			if (!isEmpty()) {
@@ -213,7 +216,7 @@ public class MyLinkedTree<T> {
 					if (thisNode.getValue().equals(temp)) {
 						return thisNode;
 					} else if (((Comparable<T>) thisNode.getValue()).compareTo(temp) > 0) {// rootValue >
-																							// data
+						// data
 						if (thisNode.getLeftChild() != null) {
 							if (thisNode.getLeftChild().getValue().equals(temp)) {
 								return thisNode;
@@ -330,4 +333,6 @@ public class MyLinkedTree<T> {
 			}
 		}
 	}
+
+
 }
