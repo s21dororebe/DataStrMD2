@@ -66,6 +66,10 @@ public class MyNode<T> {
             this.rightChild = null;
         }
     }
+    public void deleteChildren(){
+        this.rightChild = null;
+        this.leftChild = null;
+    }
 
     public boolean hasChildren(MyNode<T> node) throws Exception {
         if (node != null) {

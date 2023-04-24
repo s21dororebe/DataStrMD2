@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try {
-			MyLinkedTree<String> newTree = createMathTree("(((81+23)*25)/5)");
+			MyLinkedTree<String> newTree = createMathTree("(((81+23)*25)/5)"); //520
 //			newTree.print();
 
 			System.out.println("Tree result: " + executeMathTree(newTree));
@@ -69,71 +69,73 @@ public class Main {
 		//execute, until "right"iest == root.getrightchild
 		//execute root's right and left child
 
-		MyNode theLeftiest = mathTree.getRoot();
+		MyNode<String> theLeftiest = mathTree.getRoot();
 		while(theLeftiest.getLeftChild() != null){
 			theLeftiest = theLeftiest.getLeftChild();
 		}
 		//execute left side of the tree
 		int tempResultLeft;
 		while(theLeftiest != mathTree.getRoot().getLeftChild()){
-			if (theLeftiest.getParent().getValue().equals("+")) {
-				tempResultLeft = Integer.parseInt((String) theLeftiest.getValue()) + Integer.parseInt((String) theLeftiest.getParent().getRightChild().getValue());
-				theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
-				theLeftiest = theLeftiest.getParent();
-				theLeftiest.setLeftChild(null);
-				theLeftiest.setRightChild(null);
-			} else if (theLeftiest.getParent().getValue().equals("-")) {
-				tempResultLeft = Integer.parseInt((String) theLeftiest.getValue()) - Integer.parseInt((String) theLeftiest.getParent().getRightChild().getValue());
-				theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
-				theLeftiest = theLeftiest.getParent();
-				theLeftiest.setLeftChild(null);
-				theLeftiest.setRightChild(null);
-			} else if (theLeftiest.getParent().getValue().equals("*")) {
-				tempResultLeft = Integer.parseInt((String) theLeftiest.getValue()) * Integer.parseInt((String) theLeftiest.getParent().getRightChild().getValue());
-				theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
-				theLeftiest = theLeftiest.getParent();
-				theLeftiest.setLeftChild(null);
-				theLeftiest.setRightChild(null);
-			} else if (theLeftiest.getParent().getValue().equals("/")) {
-				tempResultLeft = Integer.parseInt((String) theLeftiest.getValue()) / Integer.parseInt((String) theLeftiest.getParent().getRightChild().getValue());
-				theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
-				theLeftiest = theLeftiest.getParent();
-				theLeftiest.setLeftChild(null);
-				theLeftiest.setRightChild(null);
+			switch(theLeftiest.getParent().getValue()){
+				case "+" -> {
+					tempResultLeft = Integer.parseInt(theLeftiest.getValue()) + Integer.parseInt( theLeftiest.getParent().getRightChild().getValue());
+					theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
+					theLeftiest = theLeftiest.getParent();
+					theLeftiest.deleteChildren();
+				}
+				case "-" -> {
+					tempResultLeft = Integer.parseInt(theLeftiest.getValue()) - Integer.parseInt( theLeftiest.getParent().getRightChild().getValue());
+					theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
+					theLeftiest = theLeftiest.getParent();
+					theLeftiest.deleteChildren();
+				}
+				case "*" -> {
+					tempResultLeft = Integer.parseInt(theLeftiest.getValue()) * Integer.parseInt( theLeftiest.getParent().getRightChild().getValue());
+					theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
+					theLeftiest = theLeftiest.getParent();
+					theLeftiest.deleteChildren();
+				}
+				case "/" -> {
+					tempResultLeft = Integer.parseInt(theLeftiest.getValue()) / Integer.parseInt( theLeftiest.getParent().getRightChild().getValue());
+					theLeftiest.getParent().setValue(String.valueOf(tempResultLeft));
+					theLeftiest = theLeftiest.getParent();
+					theLeftiest.deleteChildren();
+				}
 			}
 		}
 
-		MyNode theRightiest = mathTree.getRoot();
+		MyNode<String> theRightiest = mathTree.getRoot();
 		while(theRightiest.getRightChild() != null){
 			theRightiest = theRightiest.getRightChild();
 		}
 		//execute right side of the tree
 		int tempResultRight;
 		while(theRightiest != mathTree.getRoot().getRightChild()){
-			if (theRightiest.getParent().getValue().equals("+")) {
-				tempResultRight = Integer.parseInt((String)theRightiest.getParent().getLeftChild().getValue())  + Integer.parseInt((String)theRightiest.getValue());
-				theRightiest.getParent().setValue(String.valueOf(tempResultRight));
-				theRightiest = theRightiest.getParent();
-				theRightiest.setLeftChild(null);
-				theRightiest.setRightChild(null);
-			} else if (theRightiest.getParent().getValue().equals("-")) {
-				tempResultRight = Integer.parseInt((String)theRightiest.getParent().getLeftChild().getValue()) - Integer.parseInt((String)theRightiest.getValue());
-				theRightiest.getParent().setValue(String.valueOf(tempResultRight));
-				theRightiest = theRightiest.getParent();
-				theRightiest.setLeftChild(null);
-				theRightiest.setRightChild(null);
-			} else if (theRightiest.getParent().getValue().equals("*")) {
-				tempResultRight = Integer.parseInt((String)theRightiest.getParent().getLeftChild().getValue()) * Integer.parseInt((String)theRightiest.getValue());
-				theRightiest.getParent().setValue(String.valueOf(tempResultRight));
-				theRightiest = theRightiest.getParent();
-				theRightiest.setLeftChild(null);
-				theRightiest.setRightChild(null);
-			} else if (theRightiest.getParent().getValue().equals("/")) {
-				tempResultRight = Integer.parseInt((String)theRightiest.getParent().getLeftChild().getValue()) / Integer.parseInt((String)theRightiest.getValue());
-				theRightiest.getParent().setValue(String.valueOf(tempResultRight));
-				theRightiest = theRightiest.getParent();
-				theRightiest.setLeftChild(null);
-				theRightiest.setRightChild(null);
+			switch(theRightiest.getParent().getValue()){
+				case "+" -> {
+					tempResultRight = Integer.parseInt(theRightiest.getParent().getLeftChild().getValue()) + Integer.parseInt(theRightiest.getValue());
+					theRightiest.getParent().setValue(String.valueOf(tempResultRight));
+					theRightiest = theRightiest.getParent();
+					theRightiest.deleteChildren();
+				}
+				case "-" -> {
+					tempResultRight = Integer.parseInt(theRightiest.getParent().getLeftChild().getValue()) - Integer.parseInt(theRightiest.getValue());
+					theRightiest.getParent().setValue(String.valueOf(tempResultRight));
+					theRightiest = theRightiest.getParent();
+					theRightiest.deleteChildren();
+				}
+				case "*" -> {
+					tempResultRight = Integer.parseInt(theRightiest.getParent().getLeftChild().getValue()) * Integer.parseInt(theRightiest.getValue());
+					theRightiest.getParent().setValue(String.valueOf(tempResultRight));
+					theRightiest = theRightiest.getParent();
+					theRightiest.deleteChildren();
+				}
+				case "/" -> {
+					tempResultRight = Integer.parseInt(theRightiest.getParent().getLeftChild().getValue()) / Integer.parseInt(theRightiest.getValue());
+					theRightiest.getParent().setValue(String.valueOf(tempResultRight));
+					theRightiest = theRightiest.getParent();
+					theRightiest.deleteChildren();
+				}
 			}
 		}
 		int result = 0;
@@ -189,13 +191,6 @@ public class Main {
 		}
 
 		return (tempMassive.toArray(new String[tempMassive.size()]));
-	}
-
-	//functions for optimization
-	public static void removeChildrenAndGoToParent(MyNode node){
-		node = node.getParent();
-		node.setLeftChild(null);
-		node.setRightChild(null);
 	}
 
 }
